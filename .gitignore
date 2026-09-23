@@ -1,0 +1,8 @@
+# Системный мусор
+.DS_Store
+Thumbs.db
+*:Zone.Identifier
+
+# Резервные копии редакторов
+*.bak
+*~

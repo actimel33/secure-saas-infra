@@ -1,0 +1,14 @@
+# Пример значений переменных. Скопировать в terraform.tfvars и заполнить.
+# terraform.tfvars в .gitignore: в нём оказываются адрес для оповещений
+# и другие значения, которым не место в публичном репозитории.
+
+project     = "secure-saas"
+environment = "dev"
+region      = "eu-central-1"
+
+# Дорогие сервисы включаются на время проверки соответствия
+enable_waf       = false
+enable_config    = false
+enable_guardduty = false
+
+# alerts_email = "you@example.com"

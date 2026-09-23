@@ -1,0 +1,43 @@
+name: IaC security scan
+
+# Проверка инфраструктурного кода на каждое изменение. Нарушение должно
+# находиться до развёртывания, а не в отчёте о соответствии через неделю.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: Форматирование
+        run: terraform fmt -check -recursive
+
+      # -backend=false: проверке кода не нужны ни доступ к состоянию,
+      # ни учётные данные AWS. Ключи в секретах репозитория ради линтера —
+      # лишний риск.
+      - name: Инициализация без бэкенда
+        run: terraform init -backend=false
+
+      - name: Синтаксис и типы
+        run: terraform validate
+
+      # Проверки конфигурации: шифрование, публичный доступ, открытые
+      # порты, логирование. Правила tfsec переехали в Trivy, сам tfsec
+      # с 2025 года не развивается.
+      - name: Сканирование конфигурации
+        working-directory: .
+        run: >-
+          docker run --rm -v "$PWD:/src" aquasec/trivy:latest config /src/terraform
+          --exit-code 1 --severity HIGH,CRITICAL
