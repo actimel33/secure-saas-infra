@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Secure SaaS" id="0">
-    <mxGraphModel dx="3431" dy="2086" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1190" math="0" shadow="0">
+    <mxGraphModel dx="1201" dy="730" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1190" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -37,34 +37,34 @@
         <mxCell id="waf" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E73B8;fontColor=#1B4F82;fontSize=12;" value="WAF" vertex="1">
           <mxGeometry height="60" width="130" x="300" y="380" as="geometry" />
         </mxCell>
-        <mxCell id="alb" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E73B8;fontColor=#1B4F82;fontSize=12;" value="ALB&#10;логи доступа → S3" vertex="1">
+        <mxCell id="alb" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E73B8;fontColor=#1B4F82;fontSize=12;" value="ALB&#xa;логи доступа → S3" vertex="1">
           <mxGeometry height="60" width="190" x="470" y="380" as="geometry" />
         </mxCell>
-        <mxCell id="nat" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E73B8;fontColor=#1B4F82;fontSize=12;" value="NAT Gateway&#10;исходящий трафик" vertex="1">
+        <mxCell id="nat" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E73B8;fontColor=#1B4F82;fontSize=12;" value="NAT Gateway&#xa;исходящий трафик" vertex="1">
           <mxGeometry height="60" width="190" x="720" y="380" as="geometry" />
         </mxCell>
-        <mxCell id="api1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E8B57;fontColor=#1E5E3A;fontSize=12;" value="API #1 · AZ-a&#10;без публичного IP&#10;роль IAM · IMDSv2" vertex="1">
+        <mxCell id="api1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E8B57;fontColor=#1E5E3A;fontSize=12;" value="API #1 · AZ-a&#xa;без публичного IP&#xa;роль IAM · IMDSv2" vertex="1">
           <mxGeometry height="90" width="320" x="160" y="730" as="geometry" />
         </mxCell>
-        <mxCell id="api2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E8B57;fontColor=#1E5E3A;fontSize=12;" value="API #2 · AZ-b&#10;без публичного IP&#10;роль IAM · IMDSv2" vertex="1">
+        <mxCell id="api2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E8B57;fontColor=#1E5E3A;fontSize=12;" value="API #2 · AZ-b&#xa;без публичного IP&#xa;роль IAM · IMDSv2" vertex="1">
           <mxGeometry height="90" width="320" x="561" y="729" as="geometry" />
         </mxCell>
-        <mxCell id="rds" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D9822B;fontColor=#96551A;fontSize=12;" value="RDS PostgreSQL :5432&#10;шифрование KMS · бэкапы 7 дней&#10;без публичного доступа" vertex="1">
+        <mxCell id="rds" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D9822B;fontColor=#96551A;fontSize=12;" value="RDS PostgreSQL :5432&#xa;шифрование KMS · бэкапы 7 дней&#xa;без публичного доступа" vertex="1">
           <mxGeometry height="100" width="330" x="150" y="1040" as="geometry" />
         </mxCell>
-        <mxCell id="vpce" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D9822B;fontColor=#96551A;fontSize=12;" value="VPC-эндпоинты&#10;S3 (gateway)&#10;SSM · KMS · Secrets Manager" vertex="1">
+        <mxCell id="vpce" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D9822B;fontColor=#96551A;fontSize=12;" value="VPC-эндпоинты&#xa;S3 (gateway)&#xa;SSM · KMS · Secrets Manager" vertex="1">
           <mxGeometry height="100" width="330" x="560" y="1040" as="geometry" />
         </mxCell>
-        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B4FA8;fontColor=#4E2F6C;fontSize=12;" value="S3 · файлы клиентов&#10;SSE-KMS · версионирование&#10;Block Public Access · только TLS&#10;логи доступа" vertex="1">
+        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B4FA8;fontColor=#4E2F6C;fontSize=12;" value="S3 · файлы клиентов&#xa;SSE-KMS · версионирование&#xa;Block Public Access · только TLS&#xa;логи доступа" vertex="1">
           <mxGeometry height="120" width="450" x="1175" y="299" as="geometry" />
         </mxCell>
-        <mxCell id="sm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B4FA8;fontColor=#4E2F6C;fontSize=12;" value="Secrets Manager&#10;пароль БД · ротация" vertex="1">
+        <mxCell id="sm" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B4FA8;fontColor=#4E2F6C;fontSize=12;" value="Secrets Manager&#xa;пароль БД · ротация" vertex="1">
           <mxGeometry height="90" width="450" x="1050" y="473" as="geometry" />
         </mxCell>
-        <mxCell id="kms" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B4FA8;fontColor=#4E2F6C;fontSize=12;" value="KMS · собственный ключ&#10;ротация включена" vertex="1">
+        <mxCell id="kms" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B4FA8;fontColor=#4E2F6C;fontSize=12;" value="KMS · собственный ключ&#xa;ротация включена" vertex="1">
           <mxGeometry height="90" width="450" x="1216" y="815" as="geometry" />
         </mxCell>
-        <mxCell id="obs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6B6B6B;fontColor=#3A3A3A;fontSize=12;" value="Наблюдение и аудит&#10;CloudTrail · multi-region · валидация файлов&#10;AWS Config · GuardDuty&#10;VPC Flow Logs · логи ALB&#10;алерты → SNS" vertex="1">
+        <mxCell id="obs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6B6B6B;fontColor=#3A3A3A;fontSize=12;" value="Наблюдение и аудит&#xa;CloudTrail · multi-region · валидация файлов&#xa;AWS Config · GuardDuty&#xa;VPC Flow Logs · логи ALB&#xa;алерты → SNS" vertex="1">
           <mxGeometry height="190" width="450" x="1190" y="970" as="geometry" />
         </mxCell>
         <mxCell id="e0" edge="1" parent="1" source="client" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#232F3E;dashed=0;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;horizontal=0;" target="igw" value="HTTPS 443 · TLS 1.2+">
@@ -87,14 +87,14 @@
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="e3" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#232F3E;dashed=0;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;horizontal=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" value="HTTP :8000 · SG: только от ALB" source="alb" target="api1">
+        <mxCell id="e3" edge="1" parent="1" source="alb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#232F3E;dashed=0;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;horizontal=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="api1" value="HTTP :8000 · SG: только от ALB">
           <mxGeometry relative="1" x="0.0202" y="-10" as="geometry">
             <mxPoint as="offset" />
             <Array as="points">
               <mxPoint x="520.06" y="569.94" />
               <mxPoint x="320.06" y="569.94" />
             </Array>
-            </mxGeometry>
+          </mxGeometry>
         </mxCell>
         <mxCell id="e4" edge="1" parent="1" source="alb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#232F3E;dashed=0;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;horizontal=0;entryX=0.219;entryY=0.013;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.507;exitY=1.006;exitDx=0;exitDy=0;exitPerimeter=0;" target="api2" value="HTTP :8000">
           <mxGeometry relative="1" x="-0.4367" y="14" as="geometry">
@@ -121,7 +121,10 @@
         <mxCell id="e6" edge="1" parent="1" source="api1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#232F3E;dashed=0;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;horizontal=0;" target="rds" value="TLS · 5432">
           <mxGeometry relative="1" x="-0.2891" y="-10" as="geometry">
             <mxPoint as="offset" />
-            <Array as="points" />
+            <Array as="points">
+              <mxPoint x="315.03" y="870" />
+              <mxPoint x="315.03" y="870" />
+            </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="e7" edge="1" parent="1" source="api2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#232F3E;dashed=0;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;horizontal=0;" target="vpce" value="HTTPS · роль IAM">
@@ -170,7 +173,7 @@
             <mxPoint as="offset" />
             <Array as="points">
               <mxPoint x="1605" y="960" />
-              <mxPoint x="300.1" y="959.9" />
+              <mxPoint x="380" y="960" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -228,6 +231,25 @@
             </Array>
             <mxPoint x="803.42" y="380" as="sourcePoint" />
             <mxPoint x="510" y="594" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NGySvpWREPxS-2P2MbTX-1" edge="1" parent="1" source="api2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#232F3E;dashed=0;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;horizontal=1;entryX=0.597;entryY=0.003;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.121;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="rds" value="TLS · 5432">
+          <mxGeometry relative="1" x="-0.2891" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="599.71" y="910.03" />
+              <mxPoint x="347.03" y="910.03" />
+            </Array>
+            <mxPoint x="600" y="819" as="sourcePoint" />
+            <mxPoint x="365.82" y="990" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NGySvpWREPxS-2P2MbTX-2" edge="1" parent="1" source="api1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#232F3E;dashed=0;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;horizontal=1;exitX=0.712;exitY=1.01;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.127;entryY=-0.008;entryDx=0;entryDy=0;entryPerimeter=0;" target="vpce" value="HTTPS · роль IAM">
+          <mxGeometry relative="1" x="-0.1818" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points" />
+            <mxPoint x="630" y="819" as="sourcePoint" />
+            <mxPoint x="630" y="1040" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
