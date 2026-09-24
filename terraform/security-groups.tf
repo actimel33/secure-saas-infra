@@ -1,7 +1,7 @@
 ################################################
 #               Security groups                #
 ################################################
-#   интернет ──443──> ALB ──порт приложения──> app ──5432──> data
+#   интернет ──443──> ALB ──8443 (TLS)──> app ──5432──> data
 #
 # Правила ссылаются на другую группу, а не на диапазон адресов: новый
 # инстанс попадает под правило автоматически.
@@ -54,7 +54,7 @@ resource "aws_vpc_security_group_ingress_rule" "alb_http" {
 ################################################
 resource "aws_vpc_security_group_egress_rule" "alb_app" {
   security_group_id            = aws_security_group.alb.id
-  description                  = "Application port on the app tier"
+  description                  = "HTTPS to the application tier: traffic is encrypted end to end"
   referenced_security_group_id = aws_security_group.app.id
   from_port                    = var.app_port
   to_port                      = var.app_port
@@ -81,7 +81,7 @@ resource "aws_security_group" "app" {
 ################################################
 resource "aws_vpc_security_group_ingress_rule" "app_alb" {
   security_group_id            = aws_security_group.app.id
-  description                  = "Application port from the load balancer only"
+  description                  = "HTTPS from the load balancer only"
   referenced_security_group_id = aws_security_group.alb.id
   from_port                    = var.app_port
   to_port                      = var.app_port

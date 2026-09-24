@@ -38,15 +38,17 @@ resource "aws_lb" "public" {
 resource "aws_lb_target_group" "app" {
   name_prefix = "app-"
   port        = var.app_port
-  protocol    = "HTTP"
+  protocol    = "HTTPS"
   target_type = "instance"
   vpc_id      = aws_vpc.main.id
 
   # По умолчанию балансировщик ждёт завершения запросов 300 секунд.
   deregistration_delay = 30
 
+  # На инстансах самоподписной сертификат
   health_check {
     enabled             = true
+    protocol            = "HTTPS"
     path                = "/"
     matcher             = "200"
     interval            = 30

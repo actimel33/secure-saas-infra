@@ -62,6 +62,7 @@ timeout 8 bash -c 'cat < /dev/null > /dev/tcp/<адрес базы>/5432' && ech
 | Диски инстансов зашифрованы | [app.tf](../terraform/app.tf) — `root_block_device.encrypted` | оба тома `gp3`, `encrypted: true`, ключ — наш собственный |
 | Файлы клиентов зашифрованы | `aws_s3_bucket_server_side_encryption_configuration.files` | `SSEAlgorithm: aws:kms` с нашим ключом |
 | Журналы зашифрованы | лог-группы с `kms_key_id`, CloudTrail с `kms_key_id` | обе группы `/secure-saas/dev/*` шифруются нашим ключом |
+| Трафик от балансировщика до инстансов зашифрован | [alb.tf](../terraform/alb.tf) — целевая группа с протоколом `HTTPS`, проверка состояния по `HTTPS` | nginx на инстансе принимает только TLS 1.2 и 1.3, слушателя на незашифрованном порту нет |
 | Обращение к хранилищу только по TLS | политика бакета с `Deny` при `aws:SecureTransport = false` | попытка по HTTP отвергается явным запретом |
 
 **Проверка:**

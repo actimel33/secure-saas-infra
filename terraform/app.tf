@@ -58,10 +58,47 @@ locals {
   app_user_data = <<-EOT
     #!/bin/bash
     set -euo pipefail
-    dnf install -y nginx
-    sed -i 's/listen       80;/listen       ${var.app_port};/' /etc/nginx/nginx.conf
-    sed -i 's/listen       \[::\]:80;/listen       [::]:${var.app_port};/' /etc/nginx/nginx.conf
-    echo "$(hostname -f)" > /usr/share/nginx/html/index.html
+    dnf install -y nginx openssl
+
+    # Самоподписанный сертификат для участка балансировщик - инстанс.
+    mkdir -p /etc/nginx/tls
+    openssl req -x509 -nodes -newkey rsa:2048 -days 365 \
+      -keyout /etc/nginx/tls/server.key \
+      -out /etc/nginx/tls/server.crt \
+      -subj "/CN=$(hostname -f)"
+    chmod 600 /etc/nginx/tls/server.key
+
+    # Конфигурация перезаписывается целиком: в поставке nginx слушает
+    # порт 80 без шифрования, и такой слушатель здесь не нужен.
+    cat > /etc/nginx/nginx.conf <<'NGINX'
+    user nginx;
+    worker_processes auto;
+    error_log /var/log/nginx/error.log;
+    pid /run/nginx.pid;
+
+    events {
+        worker_connections 1024;
+    }
+
+    http {
+        include       /etc/nginx/mime.types;
+        default_type  application/octet-stream;
+
+        server {
+            listen ${var.app_port} ssl;
+
+            ssl_certificate     /etc/nginx/tls/server.crt;
+            ssl_certificate_key /etc/nginx/tls/server.key;
+            ssl_protocols       TLSv1.2 TLSv1.3;
+
+            location / {
+                default_type text/plain;
+                return 200 "$hostname\n";
+            }
+        }
+    }
+    NGINX
+
     systemctl enable --now nginx
   EOT
 }

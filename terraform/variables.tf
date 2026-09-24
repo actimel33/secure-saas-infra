@@ -149,9 +149,11 @@ variable "app_instance_count" {
 #           variable.app_port                  #
 ################################################
 variable "app_port" {
-  description = "Порт, на котором приложение слушает внутри VPC"
+  description = <<-EOT
+    Порт, на котором приложение принимает TLS-соединения от балансировщика.
+  EOT
   type        = number
-  default     = 8000
+  default     = 8443
 }
 
 ################################################
