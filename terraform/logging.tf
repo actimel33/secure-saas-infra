@@ -203,6 +203,10 @@ resource "aws_cloudtrail" "main" {
   enable_log_file_validation    = true
   kms_key_id                    = aws_kms_key.main.arn
 
+  # В S3 журнал ради длительного хранения и проверки подписи
+  cloud_watch_logs_group_arn = "${aws_cloudwatch_log_group.cloudtrail.arn}:*"
+  cloud_watch_logs_role_arn  = aws_iam_role.cloudtrail_cloudwatch.arn
+
   # События чтения и записи объектов в бакете с данными клиентов
   advanced_event_selector {
     name = "S3 data events for the files bucket"
@@ -259,6 +263,21 @@ resource "aws_flow_log" "vpc" {
 ################################################
 # По умолчанию CloudWatch Logs хранит записи
 # вечно
+################################################
+#    aws_cloudwatch_log_group.cloudtrail       #
+################################################
+# Сюда CloudTrail кладёт копию событий. Срок хранения задаётся явно.
+resource "aws_cloudwatch_log_group" "cloudtrail" {
+  name              = "/${var.project}/${var.environment}/cloudtrail"
+  retention_in_days = var.log_retention_days
+  kms_key_id        = aws_kms_key.main.arn
+
+  tags = { Name = "${local.name_prefix}-cloudtrail-logs" }
+}
+
+################################################
+#      aws_cloudwatch_log_group.app            #
+################################################
 resource "aws_cloudwatch_log_group" "app" {
   name              = "/${var.project}/${var.environment}/app"
   retention_in_days = var.log_retention_days

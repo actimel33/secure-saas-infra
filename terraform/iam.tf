@@ -84,6 +84,49 @@ resource "aws_iam_instance_profile" "app" {
 }
 
 ################################################
+#      aws_iam_role.cloudtrail_cloudwatch      #
+################################################
+# От имени этой роли CloudTrail пишет события в лог-группу.
+resource "aws_iam_role" "cloudtrail_cloudwatch" {
+  name_prefix        = "${local.name_prefix}-trail-"
+  description        = "CloudTrail delivery to CloudWatch Logs"
+  assume_role_policy = data.aws_iam_policy_document.cloudtrail_assume.json
+
+  tags = { Name = "${local.name_prefix}-trail-role" }
+}
+
+data "aws_iam_policy_document" "cloudtrail_assume" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudtrail.amazonaws.com"]
+    }
+
+    # Условие защищает от подстановки чужого журнала в нашу роль.
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceAccount"
+      values   = [local.account_id]
+    }
+  }
+}
+
+resource "aws_iam_role_policy" "cloudtrail_cloudwatch" {
+  name   = "cloudtrail-delivery"
+  role   = aws_iam_role.cloudtrail_cloudwatch.id
+  policy = data.aws_iam_policy_document.cloudtrail_cloudwatch.json
+}
+
+data "aws_iam_policy_document" "cloudtrail_cloudwatch" {
+  statement {
+    actions   = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.cloudtrail.arn}:log-stream:*"]
+  }
+}
+
+################################################
 #            aws_iam_role.config               #
 ################################################
 # Роль, от имени которой AWS Config читает конфигурацию ресурсов

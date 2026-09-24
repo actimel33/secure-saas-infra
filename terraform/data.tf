@@ -76,6 +76,7 @@ data "aws_iam_policy_document" "kms" {
         "rds.${var.region}.amazonaws.com",
         "secretsmanager.${var.region}.amazonaws.com",
         "ec2.${var.region}.amazonaws.com",
+        "sns.${var.region}.amazonaws.com",
       ]
     }
   }
@@ -95,6 +96,48 @@ data "aws_iam_policy_document" "kms" {
       test     = "StringLike"
       variable = "kms:EncryptionContext:aws:cloudtrail:arn"
       values   = ["arn:${local.partition}:cloudtrail:*:${local.account_id}:trail/*"]
+    }
+  }
+
+  # CloudWatch Logs шифрует записи сам, от имени сервиса, поэтому условия kms:ViaService выше ему недостаточно.
+  statement {
+    sid = "CloudWatchLogsEncryption"
+    actions = [
+      "kms:Encrypt*",
+      "kms:Decrypt*",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:Describe*",
+    ]
+    resources = ["*"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["logs.${var.region}.amazonaws.com"]
+    }
+
+    condition {
+      test     = "ArnLike"
+      variable = "kms:EncryptionContext:aws:logs:arn"
+      values   = ["arn:${local.partition}:logs:${var.region}:${local.account_id}:log-group:*"]
+    }
+  }
+
+  # EventBridge публикует оповещения в тему SNS, зашифрованную этим ключом
+  statement {
+    sid       = "EventBridgePublishToEncryptedTopic"
+    actions   = ["kms:GenerateDataKey*", "kms:Decrypt"]
+    resources = ["*"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["events.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceAccount"
+      values   = [local.account_id]
     }
   }
 }
@@ -145,6 +188,14 @@ resource "aws_db_instance" "main" {
 
   # Обновления безопасности движка
   auto_minor_version_upgrade = true
+
+  # Подключение по временному токену IAM.
+  iam_database_authentication_enabled = true
+
+  # Метрики нагрузки на уровне запросов.
+  performance_insights_enabled          = true
+  performance_insights_retention_period = 7
+  performance_insights_kms_key_id       = aws_kms_key.main.arn
 
   # Журналы базы уезжают в CloudWatch
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
