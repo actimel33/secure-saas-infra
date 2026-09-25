@@ -27,9 +27,41 @@ resource "aws_config_configuration_recorder" "main" {
   name     = "${local.name_prefix}-recorder"
   role_arn = aws_iam_role.config[0].arn
 
+  # Записываются только типы, из которых состоит эта инфраструктура.
   recording_group {
-    all_supported                 = true
-    include_global_resource_types = true
+    all_supported = false
+    resource_types = [
+      # сеть
+      "AWS::EC2::VPC",
+      "AWS::EC2::Subnet",
+      "AWS::EC2::RouteTable",
+      "AWS::EC2::NetworkAcl",
+      "AWS::EC2::SecurityGroup",
+      "AWS::EC2::InternetGateway",
+      "AWS::EC2::NatGateway",
+      "AWS::EC2::EIP",
+      "AWS::EC2::VPCEndpoint",
+      "AWS::EC2::NetworkInterface",
+      # вычисления и диски
+      "AWS::EC2::Instance",
+      "AWS::EC2::Volume",
+      "AWS::ElasticLoadBalancingV2::LoadBalancer",
+      # данные
+      "AWS::RDS::DBInstance",
+      "AWS::RDS::DBSubnetGroup",
+      "AWS::S3::Bucket",
+      # доступ и ключи
+      "AWS::IAM::Role",
+      "AWS::IAM::Policy",
+      "AWS::IAM::User",
+      "AWS::IAM::Group",
+      "AWS::KMS::Key",
+      "AWS::SecretsManager::Secret",
+      # журналы и оповещения
+      "AWS::CloudTrail::Trail",
+      "AWS::Logs::LogGroup",
+      "AWS::SNS::Topic",
+    ]
   }
 }
 

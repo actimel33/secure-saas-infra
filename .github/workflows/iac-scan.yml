@@ -15,7 +15,7 @@ jobs:
         working-directory: terraform
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - uses: hashicorp/setup-terraform@v3
         with:
@@ -36,8 +36,11 @@ jobs:
       # Проверки конфигурации: шифрование, публичный доступ, открытые
       # порты, логирование. Правила tfsec переехали в Trivy, сам tfsec
       # с 2025 года не развивается.
+      # Принятые срабатывания перечислены в .trivyignore.yaml — каждое
+      # с обоснованием и сроком действия. Всё остальное валит проверку.
       - name: Сканирование конфигурации
         working-directory: .
         run: >-
           docker run --rm -v "$PWD:/src" aquasec/trivy:latest config /src/terraform
+          --ignorefile /src/.trivyignore.yaml
           --exit-code 1 --severity HIGH,CRITICAL

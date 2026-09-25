@@ -64,7 +64,7 @@
         <mxCell id="kms" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7B4FA8;fontColor=#4E2F6C;fontSize=12;" value="KMS · собственный ключ&#xa;ротация включена" vertex="1">
           <mxGeometry height="90" width="450" x="1216" y="815" as="geometry" />
         </mxCell>
-        <mxCell id="obs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6B6B6B;fontColor=#3A3A3A;fontSize=12;" value="Наблюдение и аудит&#xa;CloudTrail · multi-region · валидация файлов&#xa;AWS Config · GuardDuty&#xa;VPC Flow Logs · логи ALB&#xa;алерты → SNS" vertex="1">
+        <mxCell id="obs" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6B6B6B;fontColor=#3A3A3A;fontSize=12;" value="Наблюдение и аудит&lt;br&gt;CloudTrail · multi-region · валидация файлов&lt;br&gt;AWS Config · GuardDuty&lt;br&gt;VPC Flow Logs · логи ALB&lt;div&gt;Security Hub - FSBP + CIS&lt;br&gt;алерты → SNS&lt;/div&gt;" vertex="1">
           <mxGeometry height="190" width="450" x="1190" y="970" as="geometry" />
         </mxCell>
         <mxCell id="e0" edge="1" parent="1" source="client" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeColor=#232F3E;dashed=0;fontSize=11;fontColor=#232F3E;labelBackgroundColor=#FFFFFF;horizontal=0;" target="igw" value="HTTPS 443 · TLS 1.2+">

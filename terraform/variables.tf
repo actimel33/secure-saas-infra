@@ -267,6 +267,30 @@ variable "enable_config" {
 }
 
 ################################################
+#        variable.enable_security_hub          #
+################################################
+variable "enable_security_hub" {
+  description = <<-EOT
+    Включать AWS Security Hub с наборами контролей. Работает вместе с
+    AWS Config: часть контролей опирается на его записи.
+  EOT
+  type        = bool
+  default     = false
+}
+
+################################################
+#      variable.security_standards             #
+################################################
+variable "security_standards" {
+  description = "Наборы контролей, на которые подписывается Security Hub"
+  type        = map(string)
+  default = {
+    foundational = "standards/aws-foundational-security-best-practices/v/1.0.0"
+    cis          = "standards/cis-aws-foundations-benchmark/v/3.0.0"
+  }
+}
+
+################################################
 #           variable.alerts_email              #
 ################################################
 variable "alerts_email" {

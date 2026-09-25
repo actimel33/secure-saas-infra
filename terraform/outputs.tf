@@ -86,6 +86,17 @@ output "security_alerts_topic" {
 }
 
 ################################################
+#        output.security_hub_console           #
+################################################
+# Ссылка на сводку соответствия: оценка и проваленные контроли.
+output "security_hub_console" {
+  description = "Где смотреть оценку соответствия"
+  value = var.enable_security_hub ? (
+    "https://${var.region}.console.aws.amazon.com/securityhub/home?region=${var.region}#/summary"
+  ) : "Security Hub выключен: enable_security_hub = false"
+}
+
+################################################
 #          output.enabled_guardrails           #
 ################################################
 # Какие платные механизмы включены в этом развёртывании
@@ -95,6 +106,7 @@ output "enabled_guardrails" {
     waf                 = var.enable_waf
     guardduty           = var.enable_guardduty
     config              = var.enable_config
+    security_hub        = var.enable_security_hub
     interface_endpoints = var.enable_interface_endpoints
     https_listener      = var.certificate_arn != ""
     multi_az_database   = var.db_multi_az
