@@ -18,6 +18,19 @@ resource "aws_guardduty_detector" "main" {
 }
 
 ################################################
+#          aws_inspector2_enabler.main         #
+################################################
+# Контроли Inspector.1–4. Сервис сам находит уязвимости в пакетах на
+# инстансах, в образах контейнеров и в коде функций
+
+resource "aws_inspector2_enabler" "main" {
+  count = var.enable_inspector ? 1 : 0
+
+  account_ids    = [local.account_id]
+  resource_types = ["EC2", "ECR", "LAMBDA", "LAMBDA_CODE"]
+}
+
+################################################
 #    aws_config_configuration_recorder.main    #
 ################################################
 # Ведёт историю конфигураций ресурсов и прогоняет по ним правила.

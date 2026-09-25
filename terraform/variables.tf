@@ -267,6 +267,18 @@ variable "enable_config" {
 }
 
 ################################################
+#         variable.enable_inspector            #
+################################################
+variable "enable_inspector" {
+  description = <<-EOT
+    Включать Amazon Inspector: поиск уязвимостей в пакетах на инстансах,
+    в образах и в коде функций. Оплата за просканированный ресурс.
+  EOT
+  type        = bool
+  default     = false
+}
+
+################################################
 #        variable.enable_security_hub          #
 ################################################
 variable "enable_security_hub" {
@@ -299,6 +311,28 @@ variable "alerts_email" {
     что тема SNS создаётся без подписки. Значение задаётся в локальном
     terraform.tfvars, который не коммитится.
   EOT
+  type        = string
+  default     = ""
+}
+
+################################################
+#        variable.security_contact_*           #
+################################################
+# Контакт для сообщений AWS о безопасности (контроль Account.1).
+variable "security_contact_email" {
+  description = "Почта для сообщений AWS о безопасности"
+  type        = string
+  default     = ""
+}
+
+variable "security_contact_name" {
+  description = "Имя ответственного за безопасность"
+  type        = string
+  default     = ""
+}
+
+variable "security_contact_phone" {
+  description = "Телефон ответственного, в формате +380..."
   type        = string
   default     = ""
 }

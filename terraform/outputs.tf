@@ -107,6 +107,7 @@ output "enabled_guardrails" {
     guardduty           = var.enable_guardduty
     config              = var.enable_config
     security_hub        = var.enable_security_hub
+    inspector           = var.enable_inspector
     interface_endpoints = var.enable_interface_endpoints
     https_listener      = var.certificate_arn != ""
     multi_az_database   = var.db_multi_az

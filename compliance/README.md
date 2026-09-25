@@ -58,6 +58,3 @@ AWS Config записывает конфигурацию ресурсов, Secur
 |---|---|---|
 | AWS Config | за записанный элемент конфигурации и за оценку правила | |
 | Security Hub | за каждую проверку контроля | |
-
-После сдачи оба сервиса выключаются: `enable_config = false`,
-`enable_security_hub = false`, затем `terraform apply`.
