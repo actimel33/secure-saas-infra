@@ -18,6 +18,43 @@ resource "aws_guardduty_detector" "main" {
 }
 
 ################################################
+#     aws_guardduty_detector_feature.runtime   #
+################################################
+# Контроли GuardDuty.7, 11, 12, 13. Появились ровно тогда, когда мы
+# включили сам GuardDuty: пока сервиса не было, проверять его настройку
+# было не на чем.
+#
+# Базовый GuardDuty читает журналы — вызовы API, запросы DNS, метаданные
+# соединений. Runtime Monitoring смотрит изнутри машины: запущенные
+# процессы, обращения к файлам, сетевые вызовы. Это то, чего в журналах
+# не видно по определению.
+#
+# Агентом на инстансах управляет сам сервис, ставить ничего не нужно.
+# Плата идёт за vCPU-часы, на двух t3.micro это центы в сутки.
+resource "aws_guardduty_detector_feature" "runtime" {
+  count = var.enable_guardduty ? 1 : 0
+
+  detector_id = aws_guardduty_detector.main[0].id
+  name        = "RUNTIME_MONITORING"
+  status      = "ENABLED"
+
+  additional_configuration {
+    name   = "EC2_AGENT_MANAGEMENT"
+    status = "ENABLED"
+  }
+
+  additional_configuration {
+    name   = "ECS_FARGATE_AGENT_MANAGEMENT"
+    status = "ENABLED"
+  }
+
+  additional_configuration {
+    name   = "EKS_ADDON_MANAGEMENT"
+    status = "ENABLED"
+  }
+}
+
+################################################
 #          aws_inspector2_enabler.main         #
 ################################################
 # Контроли Inspector.1–4. Сервис сам находит уязвимости в пакетах на
