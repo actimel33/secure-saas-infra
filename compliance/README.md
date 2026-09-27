@@ -47,8 +47,10 @@ API Gateway, DynamoDB. Такой контроль не проходит про�
 40 до исправлений, 33 после. Оно сравнимо между замерами и не зависит от того,
 сколько в наборе проверок для чужих сервисов.
 
+![Сводка Security Hub после исправлений](screenshots/security-standards-after.png)
+
 Исходные данные обоих замеров лежат рядом: [snapshots/before.json](snapshots/before.json)
-и [snapshots/after.json](snapshots/after.json). Скриншоты сводки — в [screenshots/](screenshots/).
+и [snapshots/after.json](snapshots/after.json).
 
 Счёт за исходное состояние не зафиксирован: Security Hub считает его
 асинхронно и предупреждает, что результат появляется в пределах получаса после
