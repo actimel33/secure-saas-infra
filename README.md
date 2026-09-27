@@ -49,6 +49,7 @@ Security Hub, интерфейсные VPC-эндпоинты, реплика б
 | [docs/security-controls.md](docs/security-controls.md) | таблицы «контроль → ресурс в коде → чем доказывается», с командами проверки |
 | [docs/challenges.md](docs/challenges.md) | что пошло не так и чем закончилось: семь разборов |
 | [compliance/README.md](compliance/README.md) | непрерывная проверка соответствия: AWS Config, Security Hub, разбор находок |
+| [docs/presentation/](docs/presentation/secrets-management-slides.pdf) | слайды доклада об управлении секретами |
 
 ## Как запустить
 
